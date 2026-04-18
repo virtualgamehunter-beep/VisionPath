@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roadmap Masa Depan</title>
+    <style>
+        :root {
+            --bg: #121212;
+            --card-bg: #1e1e1e;
+            --text: #e0e0e0;
+            --accent: #00ff00;
+            --btn-bg: #333;
+        }
+
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 500px;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+
+        /* Navigasi Halaman */
+        .page { display: none; }
+        .active { display: block; }
+
+        .age-display {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--accent);
+            margin: 20px 0;
+        }
+
+        .target-item {
+            text-align: left;
+            background: #252525;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid var(--accent);
+        }
+
+        h2 { font-size: 1.2rem; margin-bottom: 10px; color: var(--accent); }
+
+        button {
+            background: var(--btn-bg);
+            color: white;
+            border: 1px solid var(--accent);
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: inherit;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: var(--accent);
+            color: black;
+        }
+
+        .input-group {
+            font-size: 0.9rem;
+            color: #888;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="page1" class="page active">
+        <h1 style="font-size: 1rem; color: #888;">WAKTU BERJALAN</h1>
+        <div id="display-umur" class="age-display">--:--:--</div>
+        <p style="font-size: 0.8rem; color: #555;">Lahir: 17 Agustus 2001</p>
+        <button onclick="navigasi(2)">LIHAT TARGET MASA DEPAN →</button>
+    </div>
+
+    <div id="page2" class="page">
+        <h1>TARGET REALISTIS</h1>
+        
+        <div class="target-item">
+            <h2>📈 Saham BBRI</h2>
+            <div>Posisi Saat Ini: <strong><span id="slot-saham">0</span> Lot</strong></div>
+            <div class="input-group">Goal: 100 Lot (Financial Freedom Step 1)</div>
+        </div>
+
+        <div class="target-item">
+            <h2>📖 Hafalan Al-Qur'an</h2>
+            <div>Progres: <strong>Juz <span id="progres-hafal">1</span></strong></div>
+            <div class="input-group">Goal: 30 Juz (Mutqin)</div>
+        </div>
+
+        <button onclick="navigasi(1)">← KEMBALI KE WAKTU</button>
+    </div>
+</div>
+
+<script>
+    // FUNGSI NAVIGASI
+    function navigasi(halaman) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById('page' + halaman).classList.add('active');
+    }
+
+    // FUNGSI HITUNG UMUR (REAL-TIME)
+    function updateUmur() {
+        const tanggalLahir = new Date('2001-08-17T00:00:00');
+        const sekarang = new Date();
+        let selisih = sekarang - tanggalLahir;
+
+        const thn = Math.floor(selisih / (1000 * 60 * 60 * 24 * 365.25));
+        selisih %= (1000 * 60 * 60 * 24 * 365.25);
+        const bln = Math.floor(selisih / (1000 * 60 * 60 * 24 * 30.44));
+        selisih %= (1000 * 60 * 60 * 24 * 30.44);
+        const hari = Math.floor(selisih / (1000 * 60 * 60 * 24));
+        selisih %= (1000 * 60 * 60 * 24);
+        const jam = Math.floor(selisih / (1000 * 60 * 60));
+        selisih %= (1000 * 60 * 60);
+        const mnt = Math.floor(selisih / (1000 * 60));
+        const dtk = Math.floor((selisih % (1000 * 60)) / 1000);
+
+        document.getElementById('display-umur').innerText = 
+            `${thn}th ${bln}bln ${hari}hr ${jam}j ${mnt}m ${dtk}s`;
+    }
+
+    setInterval(updateUmur, 1000);
+    updateUmur();
+</script>
+
+</body>
+</html>
